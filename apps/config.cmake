@@ -2,8 +2,8 @@
 # 在这里选择机器人和板型；配置文件是构建配置的唯一来源
 
 # 目标机器人 & 板型
-set(ROBOT "test") # hero / engineer / infantry3 / infantry4 / infantry5 / drone / sentry / darts / customcontrol
-set(BOARD "single") # single / gimbal / chassis; sentry has no single_board
+set(ROBOT "hero2") # hero / engineer / infantry3 / infantry4 / infantry5 / drone / sentry / darts / customcontrol
+set(BOARD "chassis") # single / gimbal / chassis; sentry has no single_board
 
 # 板型校验
 if(NOT BOARD MATCHES "^(single|gimbal|chassis)$")
@@ -26,7 +26,7 @@ message(STATUS "Board: ${BOARD}")
 # 板型宏（只有一个为 1）
 set(SINGLE_BOARD  0)
 set(GIMBAL_BOARD  0)
-set(CHASSIS_BOARD 0)
+set(CHASSIS_BOARD 1)
 set(${BOARD_UPPER}_BOARD 1)
 
 # 模块开关

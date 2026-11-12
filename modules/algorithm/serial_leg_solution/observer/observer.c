@@ -66,8 +66,8 @@ void observer_update(DM_Motor_t *motor_8009[], DJI_Motor_t *motor_3508[])
     obs.x_R     = motor_3508[1]->base.measure.total_angle / motor_3508[1]->base.info.gear_ratio * WHEEL_R;
     obs.dx_R    = motor_3508[1]->base.measure.speed_rad / motor_3508[1]->base.info.gear_ratio * WHEEL_R;
 
-    obs.pitch   = -ins->euler_rad[1];  /* 机体俯仰角 (绕左轴, 与 INS 约定相反) */
-    obs.dpitch  = -bmi->gyro[0];       /* 机体俯仰角速度 */
+    obs.pitch   = ins->euler_rad[1];  /* 机体俯仰角 (绕左轴, 与 INS 约定相反) */
+    obs.dpitch  = bmi->gyro[0];       /* 机体俯仰角速度 */
     obs.roll    = -ins->euler_rad[0];
     obs.droll   = -bmi->gyro[1];
     obs.yaw     = ins->euler_rad[2];

@@ -3,10 +3,10 @@
 
 #include "solution_def.h"
 
-#define L_1       0.21f  
-#define L_2       0.25f
-#define L_3       0.25f
-#define L_4       0.21f
+#define  L_1       0.189f  
+#define L_2       0.225f
+#define L_3       0.225f
+#define L_4       0.189f
 #define KIN_EPS   1e-4f   /* 数值保护阈值 */
 
 

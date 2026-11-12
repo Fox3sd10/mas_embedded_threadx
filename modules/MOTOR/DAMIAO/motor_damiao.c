@@ -26,7 +26,7 @@ static const DM_Motor_Params_t *dm_get_params(Motor_Type_e type)
     case DM4310:
         return &dm_motor_params[0];
     case DM8009:
-        return &dm_motor_params[1];   /* 之前无此分支，走 default 误拿 DM4310 参数表 */
+        return &dm_motor_params[1];   
     /* 后续在此添加其他型号映射 */
     default:
         return &dm_motor_params[0];

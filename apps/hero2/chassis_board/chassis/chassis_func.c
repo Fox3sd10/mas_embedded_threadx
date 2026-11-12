@@ -74,7 +74,7 @@ static void target_update(float speed_cmd)
     LQR_calc(-march_displacement, 0.0f);
 }
 
-void chassis_init(void)
+void chassis_init(void) 
 {
     /* ========== DM8009 髋关节电机 x4 (CAN1, MIT模式) ========== */
     Motor_Init_Config_s dm_config = {
@@ -185,16 +185,16 @@ void chassis_func(Chassis_Ctrl_Cmd_t *chassis_cmd)
     if (chassis_cmd == NULL) return;
 
     /* ---- 安全检测 ---- */
-    uint8_t remote_status = Module_Remote_get_offline_status();
-    bool remote_online = (remote_status != 0 && remote_status != 2);
+ //   uint8_t remote_status = Module_Remote_get_offline_status();
+  //  bool remote_online = (remote_status != 0 && remote_status != 2);
 
     DM_Motor_t  *joints[4] = {hip_4, hip_3, hip_2, hip_1};
     DJI_Motor_t *wheels[2] = {wheel_l, wheel_r};
 
     bool all_online = true;
-    for (int i = 0; i < 4; i++) {
-        if (joints[i] == NULL ||
-            Module_Offline_get_device_status(joints[i]->base.offline_dev)) {
+     for (int i = 0; i < 4; i++) {
+         if (joints[i] == NULL ||
+             Module_Offline_get_device_status(joints[i]->base.offline_dev)) {
             all_online = false;
             break;
         }
@@ -206,14 +206,14 @@ void chassis_func(Chassis_Ctrl_Cmd_t *chassis_cmd)
             break;
         }
     }
-
-    if (!remote_online || !all_online) {
+    if ( !all_online) {
+   // if (!remote_online || !all_online) {
         for (int i = 0; i < 4; i++) {
             if (joints[i] != NULL)
                 Motor_Stop((Motor_Base *)joints[i]);
         }
         for (int i = 0; i < 2; i++) {
-            if (wheels[i] != NULL)
+            if (wheels[i] != NULL) 
                 Motor_Stop((Motor_Base *)wheels[i]);
         }
         car_state_reset();      /* 掉线: 回起立态, 恢复后重新起立 */
@@ -226,12 +226,12 @@ void chassis_func(Chassis_Ctrl_Cmd_t *chassis_cmd)
         if (joints[i] != NULL)
             Motor_Start((Motor_Base *)joints[i]);
     }
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0;  i < 2; i++) {
         if (wheels[i] != NULL)
             Motor_Start((Motor_Base *)wheels[i]);
     }
 
-    /* ---- 控制流水线 ---- */
+    /* ---- 控制流水线 ---- */ 
     BSP_DWT_Delay(0.0002f); /* 200us */
     observer_update(joints, wheels);
     kinematics_calc();
@@ -246,12 +246,16 @@ void chassis_func(Chassis_Ctrl_Cmd_t *chassis_cmd)
     VMC_calc();
 
     /* ---- VMC 力矩输出 ---- */
-    const VMC *vmc = VMC_get();
+         Motor_SetOutputTorque((Motor_Base *)hip_4,  0.0f);
+         Motor_SetOutputTorque((Motor_Base *)hip_3,  0.0f);
+         Motor_SetOutputTorque((Motor_Base *)hip_2,  0.0f);
+         Motor_SetOutputTorque((Motor_Base *)hip_1,  0.0f);
+    const VMC *vmc = VMC_get(); 
     if (vmc != NULL) {
-        Motor_SetOutputTorque((Motor_Base *)hip_4,  vmc->T_2_L);
-        Motor_SetOutputTorque((Motor_Base *)hip_3, -vmc->T_2_R);
-        Motor_SetOutputTorque((Motor_Base *)hip_2, -vmc->T_1_R);
-        Motor_SetOutputTorque((Motor_Base *)hip_1,  vmc->T_1_L);
+        // Motor_SetOutputTorque((Motor_Base *)hip_4,  vmc->T_2_L);
+        // Motor_SetOutputTorque((Motor_Base *)hip_3, -vmc->T_2_R);
+        // Motor_SetOutputTorque((Motor_Base *)hip_2, -vmc->T_1_R);
+        // Motor_SetOutputTorque((Motor_Base *)hip_1,  vmc->T_1_L);
 
         // Motor_SetOutputTorque((Motor_Base *)hip_4,  0.0f);
         // Motor_SetOutputTorque((Motor_Base *)hip_3,  0.0f);
@@ -260,8 +264,8 @@ void chassis_func(Chassis_Ctrl_Cmd_t *chassis_cmd)
     }
     const LQR *lqr = LQR_get();
     if (lqr != NULL) {
-        Motor_SetOutputTorque((Motor_Base *)wheel_l,  lqr->TL);
-        Motor_SetOutputTorque((Motor_Base *)wheel_r, -lqr->TR);
+        // Motor_SetOutputTorque((Motor_Base *)wheel_l,  lqr->TL);
+        // Motor_SetOutputTorque((Motor_Base *)wheel_r, -lqr->TR);
 
         // Motor_SetOutputTorque((Motor_Base *)wheel_l,  0.0f);
         // Motor_SetOutputTorque((Motor_Base *)wheel_r,  0.0f);

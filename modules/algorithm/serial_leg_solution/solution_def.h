@@ -13,10 +13,10 @@
 #include <stdint.h>
 
 #define WHEEL_R 0.06f
-#define phi_1_offset 173.92f
-#define phi_4_offset 6.08f
+#define phi_1_offset 176.92f
+#define phi_4_offset 3.08f
 
-#define ROBOT_MASS 16.0f
+#define ROBOT_MASS 17.0f
 //观测器
 typedef struct
 {
@@ -106,6 +106,11 @@ typedef struct
     float Fs_R;
 } GasSpring;
 
-
+typedef struct{
+    uint8_t GetUpState;
+    uint8_t JumpState;
+    uint8_t UpStairState;
+    uint8_t  AllSwitchState;
+}ObsState;
 
 #endif /* _SOLUTION_DEF_H_ */

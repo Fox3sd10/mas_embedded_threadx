@@ -10,6 +10,7 @@ typedef enum
     STATE_NUM
 } car_state_e;
 
+
 void        car_state_init(void);   /* 上电默认 STANDUP */
 void        car_state_update(void); /* 每周期调用(需 kinematics 已更新): 判据+防抖+latch */
 car_state_e car_state_get(void);
